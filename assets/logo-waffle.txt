@@ -1,0 +1,6 @@
+/*
+Bu dosyada HM Waffle web sitesi için kullanılabilecek örnek bir logo veya varsayılan ürün görseli ekleyebilirsiniz.
+
+- Menüde ürün görseli eklemezseniz, burada yer alan default.jpg görseli otomatik olarak gösterilecektir.
+- Kendi logonuzu veya ürün fotoğraflarınızı bu klasöre ekleyebilirsiniz.
+*/
