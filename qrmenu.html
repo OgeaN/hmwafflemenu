@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script src="assets/include.js"></script>
+    <div data-include="partials/head.html"></div>
+    <title>HM Waffle QR Menü</title>
+</head>
+<body>
+    <div data-include="partials/header.html"></div>
+    <main>
+        <section class="menu-section">
+            <h2>QR Menü</h2>
+            <div id="category-tabs" class="category-tabs"></div>
+            <div id="menu-list" class="menu-catalog"></div>
+        </section>
+    </main>
+    <div data-include="partials/footer.html"></div>
+    <script src="assets/menu.js"></script>
+    <script>
+      // Sayfa yüklendiğinde menüyü başlat
+      document.addEventListener('DOMContentLoaded', function() {
+        renderMenu();
+      });
+    </script>
+</body>
+</html>

@@ -1,35 +1,68 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="assets/include.js"></script>
+    <div data-include="partials/head.html"></div>
     <title>HM Waffle Menü</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lazy+Dog&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="assets/menu-images/hmwaffle.png" alt="HM Waffle Logo" class="main-logo">
-            <h1 class="hmwaffle-title">HM Waffle <span class="coffee">COFFEE</span></h1>
-        </div>
-        <nav>
-            <a href="index.html" class="active">Menü</a>
-            <a href="about.html">Hakkımızda</a>
-            <a href="location.html">Konum</a>
-        </nav>
-    </header>
+    <div data-include="partials/header.html"></div>
     <main>
-        <section class="menu-section">
-            <h2>Menü</h2>
-            <div id="category-tabs" class="category-tabs"></div>
-            <div id="menu-list"></div>
+        <section class="homepage-hero">
+            <img src="assets/menu-images/hmwaffle.png" alt="HM Waffle" class="homepage-hero-img">
+            <h2 class="homepage-title">Hoş Geldiniz!</h2>
+            <p class="homepage-desc">Taptaze waffle ve kahve çeşitlerimizle HM Waffle'a hoş geldiniz. Menüye hızlıca ulaşmak için üstteki menüyü kullanabilirsiniz.</p>
+        </section>
+
+        <!-- Öne Çıkan Ürünler Bölümü -->
+        <section class="homepage-featured-products">
+            <h3 class="section-title">Öne Çıkan Waffle'lar</h3>
+            <div class="featured-products-list">
+                <div class="product-card">
+                    <img src="assets/menu-images/sandvic-waffle.jpg" alt="Sandviç Waffle">
+                    <h4>Sandviç Waffle</h4>
+                </div>
+                <div class="product-card">
+                    <img src="assets/menu-images/duble-waffle.jpg" alt="Duble Waffle">
+                    <h4>Duble Waffle</h4>
+                </div>
+                <div class="product-card">
+                    <img src="assets/menu-images/kase-waffle.jpg" alt="Kase Waffle">
+                    <h4>Kase Waffle</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- Müşteri Yorumları Bölümü -->
+        <section class="homepage-testimonials">
+            <h3 class="section-title">Müşterilerimiz Ne Diyor?</h3>
+            <div class="testimonials-list">
+                <div class="testimonial-card">
+                    <p>"Waffle'lar harika, sunum çok güzel!"</p>
+                    <span>- Ayşe K.</span>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Kahveleri ve ortamı çok sevdik, tekrar geleceğiz."</p>
+                    <span>- Mehmet T.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instagram Akışı Bölümü -->
+        <section class="homepage-instagram">
+            <h3 class="section-title">Instagram'da Biz</h3>
+            <div class="instagram-feed">
+                <a href="https://instagram.com/hmwaffle" target="_blank" class="instagram-post">
+                    <img src="assets/menu-images/bardak-waffle.jpg" alt="Instagram Post 1">
+                </a>
+                <a href="https://instagram.com/hmwaffle" target="_blank" class="instagram-post">
+                    <img src="assets/menu-images/cubuk-waffle.jpg" alt="Instagram Post 2">
+                </a>
+            </div>
+            <a href="https://instagram.com/hmwaffle" target="_blank" class="instagram-follow-btn">Instagram'da Takip Et</a>
         </section>
     </main>
-    <footer>
-        <p>© 2025 HM Waffle | Tüm hakları saklıdır.</p>
-    </footer>
+    <div data-include="partials/footer.html"></div>
     <script src="assets/menu.js"></script>
 </body>
 </html>

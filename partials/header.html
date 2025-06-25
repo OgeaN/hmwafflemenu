@@ -1,0 +1,124 @@
+<div class="hm-header-bar">
+    <div class="hm-header-nav-left">
+        <a href="index.html">Anasayfa</a>
+        <a href="about.html">Hakkımızda</a>
+    </div>
+    <div class="hm-header-logo">
+        <img src="assets/menu-images/hmwaffle.png" alt="HM Waffle Logo">
+    </div>
+    <div class="hm-header-nav-right">
+        <a href="location.html">Konum</a>
+        <a href="galeri.html">Galeri</a>
+        <div class="hm-header-icons">
+            <a href="https://www.instagram.com/hmwaffle1/" target="_blank" class="hm-header-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+    <button class="hm-header-hamburger" aria-label="Menüyü Aç/Kapat" tabindex="0">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
+<nav class="hm-header-mobile-menu" id="mobileMenu" aria-label="Mobil Menü">
+    <button class="hm-header-menu-close" aria-label="Menüyü Kapat" tabindex="0" style="position:absolute;top:18px;right:18px;background:none;border:none;font-size:2.2rem;color:#ffe44d;z-index:1001;cursor:pointer;">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="index.html">Anasayfa</a>
+    <a href="about.html">Hakkımızda</a>
+    <a href="location.html">Konum</a>
+    <a href="galeri.html">Galeri</a>
+    <div class="hm-header-icons">
+        <a href="https://www.instagram.com/hmwaffle1/" target="_blank" class="hm-header-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+</nav>
+<script>
+(function() {
+    // Wait for all includes to finish (include.js) before running menu logic
+    function ready(fn) {
+        if (document.readyState !== 'loading') fn();
+        else document.addEventListener('DOMContentLoaded', fn);
+    }
+    ready(function() {
+        // Wait a tick for include.js to finish
+        setTimeout(function() {
+            var hamburger = document.querySelector('.hm-header-hamburger');
+            var mobileMenu = document.getElementById('mobileMenu');
+            var closeBtn = document.querySelector('.hm-header-menu-close');
+            var body = document.body;
+
+            function isMobile() {
+                return window.matchMedia('(max-width: 900px)').matches;
+            }
+            function getFocusableLinks() {
+                return mobileMenu.querySelectorAll('a,button');
+            }
+            function setActiveLink() {
+                var links = mobileMenu.querySelectorAll('a[href]');
+                var current = window.location.pathname.split('/').pop() || 'index.html';
+                // normalize for about.html vs about (for pretty URLs)
+                current = current.toLowerCase();
+                links.forEach(function(link) {
+                    var href = link.getAttribute('href').toLowerCase();
+                    // eşleşme hem tam dosya adı hem de /about gibi path ile de çalışsın
+                    if (href === current || (current === '' && href === 'index.html') || current.startsWith(href.replace('.html',''))) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+            function openMenu() {
+                if (!isMobile()) return;
+                setActiveLink();
+                mobileMenu.classList.add('open');
+                body.classList.add('hm-menu-open');
+                var focusableLinks = getFocusableLinks();
+                if (focusableLinks[1]) focusableLinks[1].focus();
+                document.addEventListener('mousedown', outsideClick);
+                document.addEventListener('keydown', escClose);
+                setTabIndex(false);
+            }
+            function closeMenu() {
+                mobileMenu.classList.remove('open');
+                body.classList.remove('hm-menu-open');
+                hamburger.focus();
+                document.removeEventListener('mousedown', outsideClick);
+                document.removeEventListener('keydown', escClose);
+                setTabIndex(true);
+            }
+            function outsideClick(e) {
+                if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+                    closeMenu();
+                }
+            }
+            function escClose(e) {
+                if (e.key === 'Escape') {
+                    closeMenu();
+                }
+            }
+            function setTabIndex(disable) {
+                var focusableLinks = getFocusableLinks();
+                focusableLinks.forEach(function(el, i) {
+                    if (disable && i > 0) el.tabIndex = -1;
+                    else el.tabIndex = 0;
+                });
+            }
+            if (hamburger && mobileMenu && closeBtn) {
+                setTabIndex(true);
+                hamburger.addEventListener('click', openMenu);
+                hamburger.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') openMenu();
+                });
+                closeBtn.addEventListener('click', closeMenu);
+                closeBtn.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') closeMenu();
+                });
+                mobileMenu.addEventListener('click', function(e) {
+                    if (e.target.tagName === 'A') closeMenu();
+                });
+                window.addEventListener('resize', function() {
+                    if (!isMobile()) closeMenu();
+                });
+            }
+        }, 100); // Wait for include.js to finish
+    });
+})();
+</script>

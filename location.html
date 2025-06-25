@@ -1,35 +1,20 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="assets/include.js"></script>
+    <div data-include="partials/head.html"></div>
     <title>HM Waffle | Konum</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lazy+Dog&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="assets/menu-images/hmwaffle.png" alt="HM Waffle Logo" class="main-logo">
-            <h1 class="hmwaffle-title">HM Waffle <span class="coffee">COFFEE</span></h1>
-        </div>
-        <nav>
-            <a href="index.html">Menü</a>
-            <a href="about.html">Hakkımızda</a>
-            <a href="location.html" class="active">Konum</a>
-        </nav>
-    </header>
+    <div data-include="partials/header.html"></div>
     <main>
         <section class="location-section">
             <h2>Konumumuz</h2>
             <div class="map-container">
-                <iframe src="https://www.google.com/maps?q=HM+Waffle&output=embed" width="100%" height="220" style="border:0; border-radius:12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps?q=HM+Waffle&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </section>
     </main>
-    <footer>
-        <p>© 2025 HM Waffle | Tüm hakları saklıdır.</p>
-    </footer>
+    <div data-include="partials/footer.html"></div>
 </body>
 </html>

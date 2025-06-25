@@ -1,27 +1,14 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="assets/include.js"></script>
+    <div data-include="partials/head.html"></div>
     <title>HM Waffle | Hakkımızda</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lazy+Dog&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="assets/menu-images/hmwaffle.png" alt="HM Waffle Logo" class="main-logo">
-            <h1 class="hmwaffle-title">HM Waffle <span class="coffee">COFFEE</span></h1>
-        </div>
-        <nav>
-            <a href="index.html">Menü</a>
-            <a href="about.html" class="active">Hakkımızda</a>
-            <a href="location.html">Konum</a>
-        </nav>
-    </header>
+    <div data-include="partials/header.html"></div>
     <main>
-        <section class="about-section about-flex">
+        <section class="about-section">
             <div class="about-left">
                 <img src="assets/menu-images/hmwaffle.png" alt="HM Waffle" class="about-main-img">
                 <div class="about-links">
@@ -32,7 +19,7 @@
             </div>
             <div class="about-right">
                 <h2>Hakkımızda</h2>
-                <p>HM Waffle, taze ve kaliteli malzemelerle hazırlanan waffle ve kahve çeşitleriyle, sıcak ve samimi bir ortamda misafirlerini ağırlamaktadır. Modern konseptimiz ve zengin menümüzle sizleri bekliyoruz.</p>
+                <p>HM Waffle, taze ve kaliteli malzemelerle hazırlanan waffle ve kahve çeşitleriyle, sıcak ve samimi bir ortamda misafirlerini ağırlamaktadır. Sizleri lezzetli menümüzle bekliyoruz.</p>
                 <div class="review-section">
                     <h3>Müşteri Yorumları</h3>
                     <div class="google-reviews-box">
@@ -74,8 +61,14 @@
             </div>
         </section>
     </main>
-    <footer>
-        <p>© 2025 HM Waffle | Tüm hakları saklıdır.</p>
-    </footer>
+    <div data-include="partials/footer.html"></div>
+    <script>
+        const hamburger = document.querySelector('.hm-header-hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>

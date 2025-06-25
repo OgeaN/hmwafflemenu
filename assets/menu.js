@@ -21,7 +21,7 @@ const menu = [
 function renderCategoryTabs(categories, activeCategory) {
     const tabs = document.getElementById('category-tabs');
     tabs.innerHTML = Object.keys(categories).map(cat => `
-        <button class="category-tab${cat === activeCategory ? ' active' : ''}" data-category="${cat}">${cat}</button>
+        <button class="tab${cat === activeCategory ? ' active' : ''}" data-category="${cat}">${cat}</button>
     `).join('');
     // Tab click event
     Array.from(tabs.querySelectorAll('button')).forEach(btn => {
@@ -31,7 +31,7 @@ function renderCategoryTabs(categories, activeCategory) {
 
 function renderMenu(selectedCategory) {
     const menuList = document.getElementById('menu-list');
-    menuList.className = 'menu-catalog';
+    menuList.className = 'menu-list';
     // Kategorilere göre gruplama
     const categories = {};
     menu.forEach(item => {
@@ -42,19 +42,17 @@ function renderMenu(selectedCategory) {
     const activeCategory = selectedCategory || Object.keys(categories)[0];
     renderCategoryTabs(categories, activeCategory);
     menuList.innerHTML = `
-        <div class="menu-category-list">
-            ${categories[activeCategory].map(item => `
-                <div class="menu-card">
-                    <div class="menu-img">
-                        <img src="${item.image}" alt="${item.name}" onerror="this.src='assets/menu-images/default.jpg'">
-                    </div>
-                    <div class="menu-info">
-                        <span class="name">${item.name}</span>
-                        <span class="price">${item.price}₺</span>
-                    </div>
+        ${categories[activeCategory].map(item => `
+            <div class="menu-card">
+                <div class="menu-img">
+                    <img src="${item.image}" alt="${item.name}" onerror="this.src='assets/menu-images/default.jpg'">
                 </div>
-            `).join('')}
-        </div>
+                <div class="menu-info">
+                  <span class="name">${item.name}</span>
+                  <span class="price">${item.price}₺</span>
+                </div>
+            </div>
+        `).join('')}
     `;
 }
 
