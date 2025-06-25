@@ -29,6 +29,23 @@ function renderCategoryTabs(categories, activeCategory) {
     });
 }
 
+function openImageModal(imageSrc, altText) {
+    let modal = document.getElementById('image-modal');
+    let modalImg = document.getElementById('modal-img');
+    let modalAlt = document.getElementById('modal-alt');
+    if (modal && modalImg) {
+        modal.style.display = 'flex';
+        modalImg.src = imageSrc;
+        modalImg.alt = altText;
+        if (modalAlt) modalAlt.textContent = altText;
+    }
+}
+
+function closeImageModal() {
+    let modal = document.getElementById('image-modal');
+    if (modal) modal.style.display = 'none';
+}
+
 function renderMenu(selectedCategory) {
     const menuList = document.getElementById('menu-list');
     menuList.className = 'menu-list';
@@ -43,7 +60,7 @@ function renderMenu(selectedCategory) {
     renderCategoryTabs(categories, activeCategory);
     menuList.innerHTML = `
         ${categories[activeCategory].map(item => `
-            <div class="menu-card">
+            <div class="menu-card" onclick=\"openImageModal('${item.image}','${item.name}')\">
                 <div class="menu-img">
                     <img src="${item.image}" alt="${item.name}" onerror="this.src='assets/menu-images/default.jpg'">
                 </div>
@@ -55,5 +72,18 @@ function renderMenu(selectedCategory) {
         `).join('')}
     `;
 }
+
+// Modalı kapatmak için ESC tuşu ve dışarı tıklama
+window.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('image-modal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeImageModal();
+        });
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeImageModal();
+    });
+});
 
 document.addEventListener('DOMContentLoaded', () => renderMenu());

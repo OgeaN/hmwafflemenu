@@ -20,6 +20,14 @@
         </section>
     </main>
     <div data-include="partials/footer.html"></div>
+    <!-- Modal for large image -->
+    <div id="image-modal" class="image-modal" style="display:none;">
+      <div class="modal-img-wrapper">
+        <span class="modal-close" onclick="closeImageModal()">&times;</span>
+        <img class="modal-content" id="modal-img" alt="">
+      </div>
+      <div id="modal-alt" class="modal-caption"></div>
+    </div>
     <script src="assets/menu.js"></script>
     <script>
       // Sayfa yüklendiğinde menüyü başlat

@@ -892,13 +892,16 @@ footer {
 }
 @media (max-width: 600px) {
   .menu-list {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.6rem;
   }
   .menu-card {
     max-width: 120px;
+    min-width: 0;
+    width: 100%;
     min-height: 90px;
     padding: 0.4rem 0.2rem 0.4rem 0.2rem;
+    box-sizing: border-box;
   }
   .menu-card .menu-img {
     max-width: 60px;
@@ -910,5 +913,87 @@ footer {
   .menu-card .price {
     font-size: 0.85rem;
     padding: 0.12rem 0.4rem;
+  }
+  .menu-section h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+    padding: 0.3rem 0.1rem;
+    word-break: break-word;
+  }
+}
+
+/* Modal (Büyük Fotoğraf) */
+.image-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background: rgba(0,0,0,0.85);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: background 0.2s;
+}
+.image-modal[style*="display: flex"] {
+  display: flex !important;
+}
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90vw;
+  max-height: 70vh;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 40px 0 rgba(160,90,28,0.25);
+  background: #fffbe6;
+  padding: 0.7rem;
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.8rem;
+  color: #ffe44d;
+  font-size: 4rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10001;
+  text-shadow: 0 2px 16px #000a;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  line-height: 1;
+  padding: 0;
+}
+.modal-close:hover {
+  color: #fffbe6;
+}
+.image-modal {
+  /* ...existing code... */
+}
+
+/* Modal içeriği ve çarpı hizalaması için kapsayıcı */
+.modal-img-wrapper {
+  position: relative;
+  display: inline-block;
+}
+@media (max-width: 700px) {
+  .modal-content {
+    max-width: 98vw;
+    max-height: 50vh;
+    padding: 0.2rem;
+  }
+  .modal-caption {
+    font-size: 1rem;
+  }
+  .modal-close {
+    font-size: 2.5rem;
+    top: 0.2rem;
+    right: 0.2rem;
   }
 }
