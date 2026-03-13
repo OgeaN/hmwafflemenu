@@ -69,7 +69,7 @@
   .qr-card-img { aspect-ratio: 4/3; }
 }
 @media (max-width: 480px) {
-  .qr-grid { grid-template-columns: 1fr; }
+  .qr-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
   .map-box { aspect-ratio: 1; }
 }
 
@@ -117,3 +117,23 @@
   .hero-ticker-wrapper { transform: translateX(-50%) rotate(0deg); margin-top: 4rem; }
 }
 
+
+.hero-main-img { border-radius: 50%; object-fit: contain !important; }
+
+
+/* UI Fixes */
+.hero-main-img {
+    border-radius: 10% !important;
+    aspect-ratio: 1/1 !important;
+    object-fit: contain !important;
+    background-color: #fff;
+    box-shadow: 0px 10px 40px rgba(0,0,0,0.6);
+    padding: 0;
+}
+
+@media (max-width: 480px) {
+    .qr-card { padding: 0.5rem; }
+    .qr-card-name { font-size: 0.85rem !important; }
+    .qr-card-price { font-size: 1rem !important; }
+    .qr-card-img { margin-bottom: 0.5rem !important; aspect-ratio: 1 / 1 !important; }
+}

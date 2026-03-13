@@ -94,7 +94,7 @@ function closeImageModal() {
 
 function renderMenu(selectedCategory) {
     const menuList = document.getElementById('menu-list');
-    menuList.className = 'menu-list';
+    menuList.className = 'qr-grid';
     // Kategorilere göre gruplama
     const categories = {};
     menu.forEach(item => {
