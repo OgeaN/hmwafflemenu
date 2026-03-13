@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fis Yazdir</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <nav class="sidebar" id="sidebar-container"></nav>
+        <main class="main-content">
+            <h1>Fis Yazdirma</h1>
+            <div class="receipt-layout">
+                <section class="receipt-controls card-like">
+                    <h3>Urun Secimi</h3>
+                    <div class="receipt-form-grid">
+                        <div>
+                            <label for="receipt-store-name">Isletme Adi</label>
+                            <input type="text" id="receipt-store-name" value="HM Waffle">
+                        </div>
+                        <div>
+                            <label for="receipt-price-source">Fiyat Kaynagi</label>
+                            <select id="receipt-price-source">
+                                <option value="storePrice">Kasa</option>
+                                <option value="trendyolPrice">Trendyol</option>
+                                <option value="yemeksepetiPrice">Yemeksepeti</option>
+                                <option value="migrosPrice">Migros</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="receipt-products-wrap">
+                        <div id="receipt-products-grid" class="receipt-products-grid"></div>
+                    </div>
+
+                    <div class="receipt-actions">
+                        <button type="button" id="receipt-clear-btn" class="secondary">Secimi Sifirla</button>
+                        <button type="button" id="receipt-print-btn">80mm Fis Yazdir</button>
+                    </div>
+                </section>
+
+                <section class="receipt-preview-panel card-like">
+                    <h3>Fis Onizleme</h3>
+                    <div id="receipt-preview" class="receipt-paper"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/pages/receiptPrinter.js"></script>
+    <script type="module" src="js/ui/sidebar.js"></script>
+</body>
+</html>
