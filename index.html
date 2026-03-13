@@ -3,71 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HM Waffle Menü</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lazy+Dog&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>HM Waffle | Premium Lezzet Deneyimi</title>
+    <!-- Dynamic Component Script -->
     <script src="assets/include.js"></script>
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
+    
+    <!-- Injection Point -->
     <div data-include="partials/header.html"></div>
-    <main>
-        <section class="homepage-hero">
-            <img src="assets/menu-images/hmwaffle.png" alt="HM Waffle" class="homepage-hero-img">
-            <h2 class="homepage-title">Hoş Geldiniz!</h2>
-            <p class="homepage-desc">Taptaze waffle ve kahve çeşitlerimizle HM Waffle'a hoş geldiniz. Menüye ulaşmak için masalarımızdaki QR kodu okutabilirsiniz.</p>
-        </section>
-
-        <!-- Öne Çıkan Ürünler Bölümü -->
-        <section class="homepage-featured-products">
-            <h3 class="section-title">Öne Çıkan Waffle'lar</h3>
-            <div class="featured-products-list">
-                <div class="product-card">
-                    <img src="assets/menu-images/sandvic-waffle.jpg" alt="Sandviç Waffle">
-                    <h4>Sandviç Waffle</h4>
+    
+    <main class="main-wrapper">
+        
+        <!-- Hero Overhaul -->
+        <section class="hero-layout">
+            <div class="hero-content">
+                <div class="hero-badge"><i class="ri-sparkling-fill" style="color: var(--brand-yellow);"></i> Bölgenin En Sevilen Mekanı</div>
+                <h1 class="h-display">GERÇEK <br><span class="text-yellow">WAFFLE</span><br>TUTKUSU.</h1>
+                <p class="hero-desc">Taptaze pamuk gibi bir hamur, sınır tanımayan malzeme çeşitliliği ve gerçek Belçika çikolatası... HM Waffle ile standartları unutun.</p>
+                <div class="hero-btns">
+                    <a href="qrmenu.html" class="btn btn-primary"><i class="ri-qr-code-line"></i> Menüyü İncele</a>
+                    <a href="galeri.html" class="btn btn-outline"><i class="ri-image-line"></i> Galeriye Bak</a>
                 </div>
-                <div class="product-card">
-                    <img src="assets/menu-images/duble-waffle.jpg" alt="Duble Waffle">
-                    <h4>Duble Waffle</h4>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-visual-disk"></div>
+                <img src="assets/menu-images/hmwaffle.png" alt="HM Logo Waffle" class="hero-main-img">
+                
+                <!-- Floating Info Badges for Desktop -->
+                <div class="floating-badge fb-top-right">
+                    <div class="fb-icon">🍫</div>
+                    <div class="fb-text">Gerçek Şelale<br><span>Belçika Çikolatası</span></div>
                 </div>
-                <div class="product-card">
-                    <img src="assets/menu-images/kase-waffle.jpg" alt="Kase Waffle">
-                    <h4>Kase Waffle</h4>
+                <div class="floating-badge fb-bottom-left">
+                    <div class="fb-icon">🍓</div>
+                    <div class="fb-text">Günlük Taze<br><span>Mevsim Meyveleri</span></div>
+                </div>
+                <div class="floating-badge fb-bottom-right">
+                    <div class="fb-icon"><i class="ri-star-fill text-yellow"></i></div>
+                    <div class="fb-text">4.9/5 Puan<br><span>Üstün Memnuniyet</span></div>
                 </div>
             </div>
         </section>
 
-        <!-- Müşteri Yorumları Bölümü -->
-        <section class="homepage-testimonials">
-            <h3 class="section-title">Müşterilerimiz Ne Diyor?</h3>
-            <div class="testimonials-list">
-                <div class="testimonial-card">
-                    <p>"Waffle'lar harika, sunum çok güzel!"</p>
-                    <span>- Ayşe K.</span>
-                </div>
-                <div class="testimonial-card">
-                    <p>"Kahveleri ve ortamı çok sevdik, tekrar geleceğiz."</p>
-                    <span>- Mehmet T.</span>
-                </div>
+        <!-- Dynamic Ticker Tape -->
+        <div class="hero-ticker-wrapper">
+            <div class="hero-ticker">
+                <!-- Group 1 -->
+                <span>%100 TAZE HAMUR</span><i class="ri-star-s-fill"></i>
+                <span>ESPRESSO KAHVELER</span><i class="ri-star-s-fill"></i>
+                <span>GÜNLÜK MEYVELER</span><i class="ri-star-s-fill"></i>
+                <span>SERİNLETİCİ İÇECEKLER</span><i class="ri-star-s-fill"></i>
+                <span>FONDÜ & SUFLE</span><i class="ri-star-s-fill"></i>
+                <!-- Group 2 (Duplicate for smooth scroll loop) -->
+                <span>%100 TAZE HAMUR</span><i class="ri-star-s-fill"></i>
+                <span>ESPRESSO KAHVELER</span><i class="ri-star-s-fill"></i>
+                <span>GÜNLÜK MEYVELER</span><i class="ri-star-s-fill"></i>
+                <span>SERİNLETİCİ İÇECEKLER</span><i class="ri-star-s-fill"></i>
+                <span>FONDÜ & SUFLE</span><i class="ri-star-s-fill"></i>
             </div>
-        </section>
+        </div>
 
-        <!-- Instagram Akışı Bölümü -->
-        <section class="homepage-instagram">
-            <h3 class="section-title">Instagram'da Biz</h3>
-            <div class="instagram-feed">
-                <a href="https://instagram.com/hmwaffle" target="_blank" class="instagram-post">
-                    <img src="assets/menu-images/bardak-waffle.jpg" alt="Instagram Post 1">
+        <!-- Bento Grid Section -->
+        <section class="bento-section">
+            <div class="section-head">
+                <h2 class="h-title">NEDEN <span class="text-yellow">BİZ?</span></h2>
+                <p>En çok tercih edilenler ve misafirlerimizin gözünden HM Waffle</p>
+            </div>
+            
+            <div class="bento-grid">
+                
+                <!-- Bento Cell 1 (Span 2) -->
+                <div class="bento-box b-span-2 bento-dark-gradient">
+                    <img src="assets/menu-images/duble-waffle.jpg" alt="Duble Waffle" class="bento-img-bg">
+                    <div class="bento-content">
+                        <h3>Duble Waffle</h3>
+                        <p class="text-muted">Çikolataya ve lezzete gerçekten doyuran imza ürünümüz.</p>
+                    </div>
+                </div>
+
+                <!-- Bento Cell 2 -->
+                <div class="bento-box bento-yellow">
+                    <div class="bento-content">
+                        <div class="huge-stat">%100</div>
+                        <h3>Gerçek Çikolata</h3>
+                        <p>Sadece en taze ve kaliteli malzemeleri kullanıyoruz.</p>
+                    </div>
+                </div>
+
+                <!-- Bento Cell 3 -->
+                <div class="bento-box">
+                    <div class="bento-content">
+                        <div class="review-stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                        <p class="review-text">"Waffle hamuru inanılmaz hafifti. Kesinlikle bölgenin en iyisi diyebilirim!"</p>
+                        <p class="text-muted" style="margin-top: 1rem">- Ayşe K.</p>
+                    </div>
+                </div>
+                
+                <!-- Bento Cell 4 -->
+                <div class="bento-box b-span-2">
+                    <div class="bento-content">
+                        <div class="review-stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div>
+                        <p class="review-text">"Kahveleri de en az waffle'ları kadar başarılı. Ambiyans çok yenilikçi ve ferah."</p>
+                        <p class="text-muted" style="margin-top: 1rem">- Mehmet D.</p>
+                    </div>
+                </div>
+                
+                <!-- Bento Cell 5 (Span 2) -->
+                <a href="https://instagram.com/hmwaffle1" target="_blank" class="bento-box b-span-2 bento-dark-gradient" style="text-align: center; justify-content: center;">
+                    <i class="ri-instagram-line" style="font-size: 4rem; color: var(--brand-yellow); margin-bottom: 1rem;"></i>
+                    <div class="bento-content">
+                        <h3>@hmwaffle1</h3>
+                        <p class="text-muted">Instagram'da bizi takip edin, sürprizleri kaçırmayın.</p>
+                    </div>
                 </a>
-                <a href="https://instagram.com/hmwaffle" target="_blank" class="instagram-post">
-                    <img src="assets/menu-images/cubuk-waffle.jpg" alt="Instagram Post 2">
-                </a>
+
             </div>
-            <a href="https://instagram.com/hmwaffle1" target="_blank" class="instagram-follow-btn">Instagram'da Takip Et</a>
         </section>
+
     </main>
+
+    <!-- Injection Point -->
     <div data-include="partials/footer.html"></div>
-    <script src="assets/menu.js"></script>
+
 </body>
 </html>

@@ -3,37 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HM Waffle QR Menü</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lazy+Dog&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>HM Waffle | Temassız Menü</title>
     <script src="assets/include.js"></script>
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
     <div data-include="partials/header.html"></div>
-    <main>
-        <section class="menu-section">
-            <h2>QR Menü</h2>
-            <div id="category-tabs" class="category-tabs"></div>
-            <div id="menu-list" class="menu-catalog"></div>
-        </section>
+    
+    <main class="main-wrapper qr-layout">
+        <div class="qr-header">
+            <h1 class="h-title">Lezzet <span class="text-yellow">Menüsü.</span></h1>
+            <p class="text-muted">Kategoriler arasında gezinerek size en uygun lezzeti seçin.</p>
+        </div>
+        
+        <div id="category-tabs" class="category-tabs">
+            <!-- JS tarafından doldurulacak -->
+        </div>
+        
+        <div id="menu-list" class="qr-grid">
+            <!-- JS tarafından doldurulacak -->
+        </div>
     </main>
-    <div data-include="partials/footer.html"></div>
-    <!-- Modal for large image -->
-    <div id="image-modal" class="image-modal" style="display:none;">
-      <div class="modal-img-wrapper">
-        <span class="modal-close" onclick="closeImageModal()">&times;</span>
-        <img class="modal-content" id="modal-img" alt="">
-      </div>
-      <div id="modal-alt" class="modal-caption"></div>
+
+    <!-- Fullscreen Image Modal -->
+    <div id="image-modal" class="image-modal">
+        <button class="modal-close-btn" onclick="closeImageModal()"><i class="ri-close-line"></i></button>
+        <img id="modal-img" class="modal-content" src="" alt="Ürün Görseli">
+        <div id="modal-alt" class="modal-caption"></div>
     </div>
+
+    <div data-include="partials/footer.html"></div>
     <script src="assets/menu.js"></script>
-    <script>
-      // Sayfa yüklendiğinde menüyü başlat
-      document.addEventListener('DOMContentLoaded', function() {
-        renderMenu();
-      });
-    </script>
 </body>
 </html>

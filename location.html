@@ -3,23 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HM Waffle | Konum</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lazy+Dog&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Konum & İletişim | HM Waffle</title>
     <script src="assets/include.js"></script>
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
     <div data-include="partials/header.html"></div>
-    <main>
-        <section class="location-section">
-            <h2>Konumumuz</h2>
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps?q=HM+Waffle&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    
+    <main class="main-wrapper">
+        <h1 class="h-title"><span class="text-yellow">Neredeyiz?</span></h1>
+        
+        <div class="map-box" style="margin-top:2rem;">
+            <iframe src="https://www.google.com/maps?q=HM+Waffle&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        
+        <div style="margin-top: 3rem; text-align: center;">
+            <h2 class="h-title" style="font-size: 2rem;">Bizi Ziyaret Edin</h2>
+            <p class="text-muted" style="margin-top: 1rem;">Taze waffle kokularını takip edin, adresimizi kolayca bulacaksınız!</p>
+            <div style="margin-top: 2rem;">
+                <a href="https://instagram.com/hmwaffle1" target="_blank" class="btn btn-outline"><i class="ri-instagram-fill"></i> Instagram</a>
             </div>
-        </section>
+        </div>
     </main>
+
     <div data-include="partials/footer.html"></div>
 </body>
 </html>

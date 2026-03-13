@@ -1,124 +1,67 @@
-<div class="hm-header-bar">
-    <div class="hm-header-nav-left">
-        <a href="index.html">Anasayfa</a>
-        <a href="about.html">Hakkımızda</a>
+<!-- NEW V2 HEADER -->
+<header class="site-header">
+    <a href="index.html" class="header-brand">
+        <img src="assets/menu-images/hmwaffle.png" alt="HM Logo" class="header-logo">
+        <span class="text-yellow">HM</span> WAFFLE
+    </a>
+    
+    <nav class="header-nav">
+        <a href="index.html" class="nav-link">Keşfet</a>
+        <a href="about.html" class="nav-link">Hakkımızda</a>
+        <a href="galeri.html" class="nav-link">Galeri</a>
+        <a href="location.html" class="nav-link">Konum</a>
+    </nav>
+    
+    <div class="header-actions">
+        <a href="https://instagram.com/hmwaffle1" target="_blank" class="icon-btn"><i class="ri-instagram-fill"></i></a>
+        <a href="qrmenu.html" class="btn-cta-nav"><i class="ri-qr-code-line"></i> QR MENÜ</a>
+        <button class="icon-btn mobile-toggle" id="menuOpenBtn"><i class="ri-menu-4-line"></i></button>
     </div>
-    <div class="hm-header-logo">
-        <img src="assets/menu-images/hmwaffle.png" alt="HM Waffle Logo">
-    </div>
-    <div class="hm-header-nav-right">
-        <a href="location.html">Konum</a>
-        <a href="galeri.html">Galeri</a>
-        <div class="hm-header-icons">
-            <a href="https://www.instagram.com/hmwaffle1/" target="_blank" class="hm-header-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-    </div>
-    <button class="hm-header-hamburger" aria-label="Menüyü Aç/Kapat" tabindex="0">
-        <i class="fas fa-bars"></i>
-    </button>
-</div>
-<nav class="hm-header-mobile-menu" id="mobileMenu" aria-label="Mobil Menü">
-    <button class="hm-header-menu-close" aria-label="Menüyü Kapat" tabindex="0" style="position:absolute;top:18px;right:18px;background:none;border:none;font-size:2.2rem;color:#ffe44d;z-index:1001;cursor:pointer;">
-        <i class="fas fa-times"></i>
-    </button>
-    <a href="index.html">Anasayfa</a>
-    <a href="about.html">Hakkımızda</a>
-    <a href="location.html">Konum</a>
-    <a href="galeri.html">Galeri</a>
-    <div class="hm-header-icons">
-        <a href="https://www.instagram.com/hmwaffle1/" target="_blank" class="hm-header-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
-    </div>
-</nav>
-<script>
-(function() {
-    // Wait for all includes to finish (include.js) before running menu logic
-    function ready(fn) {
-        if (document.readyState !== 'loading') fn();
-        else document.addEventListener('DOMContentLoaded', fn);
-    }
-    ready(function() {
-        // Wait a tick for include.js to finish
-        setTimeout(function() {
-            var hamburger = document.querySelector('.hm-header-hamburger');
-            var mobileMenu = document.getElementById('mobileMenu');
-            var closeBtn = document.querySelector('.hm-header-menu-close');
-            var body = document.body;
+</header>
 
-            function isMobile() {
-                return window.matchMedia('(max-width: 900px)').matches;
+<!-- MOBILE APP DRAWER -->
+<div class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-top">
+        <div class="header-brand">
+            <img src="assets/menu-images/hmwaffle.png" alt="HM" class="header-logo"><span class="text-yellow">HM</span> WAFFLE
+        </div>
+        <button class="drawer-close" id="menuCloseBtn"><i class="ri-close-large-line"></i></button>
+    </div>
+    
+    <nav class="drawer-links">
+        <a href="index.html" class="nav-link">Keşfet</a>
+        <a href="qrmenu.html" class="nav-link text-yellow">QR Menü</a>
+        <a href="about.html" class="nav-link">Hakkımızda</a>
+        <a href="galeri.html" class="nav-link">Galeri</a>
+        <a href="location.html" class="nav-link">Konum</a>
+    </nav>
+</div>
+
+<script>
+    setTimeout(() => {
+        const toggle = document.getElementById('menuOpenBtn');
+        const close = document.getElementById('menuCloseBtn');
+        const drawer = document.getElementById('mobileDrawer');
+        const links = document.querySelectorAll('.nav-link');
+        
+        let pathName = window.location.pathname.split('/').pop() || 'index.html';
+        if(pathName === '') pathName = 'index.html';
+
+        if(toggle && close && drawer) {
+            toggle.addEventListener('click', () => {
+                drawer.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+            close.addEventListener('click', () => {
+                drawer.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        }
+        
+        links.forEach(l => {
+            if(l.getAttribute('href') === pathName) {
+                l.classList.add('active');
             }
-            function getFocusableLinks() {
-                return mobileMenu.querySelectorAll('a,button');
-            }
-            function setActiveLink() {
-                var links = mobileMenu.querySelectorAll('a[href]');
-                var current = window.location.pathname.split('/').pop() || 'index.html';
-                // normalize for about.html vs about (for pretty URLs)
-                current = current.toLowerCase();
-                links.forEach(function(link) {
-                    var href = link.getAttribute('href').toLowerCase();
-                    // eşleşme hem tam dosya adı hem de /about gibi path ile de çalışsın
-                    if (href === current || (current === '' && href === 'index.html') || current.startsWith(href.replace('.html',''))) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
-            }
-            function openMenu() {
-                if (!isMobile()) return;
-                setActiveLink();
-                mobileMenu.classList.add('open');
-                body.classList.add('hm-menu-open');
-                var focusableLinks = getFocusableLinks();
-                if (focusableLinks[1]) focusableLinks[1].focus();
-                document.addEventListener('mousedown', outsideClick);
-                document.addEventListener('keydown', escClose);
-                setTabIndex(false);
-            }
-            function closeMenu() {
-                mobileMenu.classList.remove('open');
-                body.classList.remove('hm-menu-open');
-                hamburger.focus();
-                document.removeEventListener('mousedown', outsideClick);
-                document.removeEventListener('keydown', escClose);
-                setTabIndex(true);
-            }
-            function outsideClick(e) {
-                if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
-                    closeMenu();
-                }
-            }
-            function escClose(e) {
-                if (e.key === 'Escape') {
-                    closeMenu();
-                }
-            }
-            function setTabIndex(disable) {
-                var focusableLinks = getFocusableLinks();
-                focusableLinks.forEach(function(el, i) {
-                    if (disable && i > 0) el.tabIndex = -1;
-                    else el.tabIndex = 0;
-                });
-            }
-            if (hamburger && mobileMenu && closeBtn) {
-                setTabIndex(true);
-                hamburger.addEventListener('click', openMenu);
-                hamburger.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') openMenu();
-                });
-                closeBtn.addEventListener('click', closeMenu);
-                closeBtn.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') closeMenu();
-                });
-                mobileMenu.addEventListener('click', function(e) {
-                    if (e.target.tagName === 'A') closeMenu();
-                });
-                window.addEventListener('resize', function() {
-                    if (!isMobile()) closeMenu();
-                });
-            }
-        }, 100); // Wait for include.js to finish
-    });
-})();
+        });
+    }, 150);
 </script>

@@ -67,7 +67,7 @@ const menu = [
 function renderCategoryTabs(categories, activeCategory) {
     const tabs = document.getElementById('category-tabs');
     tabs.innerHTML = Object.keys(categories).map(cat => `
-        <button class="tab${cat === activeCategory ? ' active' : ''}" data-category="${cat}">${cat}</button>
+        <button class="category-tab${cat === activeCategory ? ' active' : ''}" data-category="${cat}">${cat}</button>
     `).join('');
     // Tab click event
     Array.from(tabs.querySelectorAll('button')).forEach(btn => {
@@ -80,7 +80,7 @@ function openImageModal(imageSrc, altText) {
     let modalImg = document.getElementById('modal-img');
     let modalAlt = document.getElementById('modal-alt');
     if (modal && modalImg) {
-        modal.style.display = 'flex';
+        modal.classList.add('show');
         modalImg.src = imageSrc;
         modalImg.alt = altText;
         if (modalAlt) modalAlt.textContent = altText;
@@ -89,7 +89,7 @@ function openImageModal(imageSrc, altText) {
 
 function closeImageModal() {
     let modal = document.getElementById('image-modal');
-    if (modal) modal.style.display = 'none';
+    if (modal) modal.classList.remove('show');
 }
 
 function renderMenu(selectedCategory) {
@@ -106,13 +106,11 @@ function renderMenu(selectedCategory) {
     renderCategoryTabs(categories, activeCategory);
     menuList.innerHTML = `
         ${categories[activeCategory].map(item => `
-            <div class="menu-card" onclick=\"openImageModal('${item.image}','${item.name}')\">
-                <div class="menu-img">
-                    <img src="${item.image}" alt="${item.name}" onerror="this.src='assets/menu-images/default.jpg'">
-                </div>
-                <div class="menu-info">
-                  <span class="name">${item.name}</span>
-                  <span class="price">${item.price}₺</span>
+            <div class="qr-card" onclick="openImageModal('${item.image}','${item.name}')">
+                <img class="qr-card-img" src="${item.image}" alt="${item.name}" onerror="this.src='assets/menu-images/default.jpg'">
+                <div class="qr-card-info">
+                  <span class="qr-card-name">${item.name}</span>
+                  <span class="qr-card-price">${item.price} ₺</span>
                 </div>
             </div>
         `).join('')}
