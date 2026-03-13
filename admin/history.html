@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gecmis & Raporlar - Waffle Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      .history-dashboard { display: flex; flex-direction: column; gap: 24px; }
+      .chart-container-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+      .chart-container-row > div { width: 100%; min-width: 0; }
+      .chart-wrapper { width: 100%; height: 320px; position: relative; }
+      @media (max-width: 1024px) { .chart-container-row { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <nav class="sidebar" id="sidebar-container"></nav>
+        <main class="main-content">
+            <h1>Gecmis Raporlar & Analitik</h1>
+            
+            <div class="history-dashboard">
+                <div class="history-summary-bar">
+                    <div class="summary-chip">
+                        <span>Toplam Log Kaydi</span>
+                        <strong id="sum-total-records">0</strong>
+                    </div>
+                    <div class="summary-chip">
+                        <span>Filtrelenen Gun Sayisi</span>
+                        <strong id="sum-filtered-records">0</strong>
+                    </div>
+                    <div class="summary-chip" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);">
+                        <span style="color:#dbeafe;">Filtre Toplam Gelir</span>
+                        <strong id="sum-filtered-revenue" style="color:#fff;">0.00 ?</strong>
+                    </div>
+                </div>
+
+                <div class="history-controls">
+                    <div class="control-group">
+                        <label for="start-date">Baslangic</label>
+                        <input type="date" id="start-date">
+                    </div>
+                    <div class="control-group">
+                        <label for="end-date">Bitis</label>
+                        <input type="date" id="end-date">
+                    </div>
+                    <div class="control-action">
+                        <button id="filter-btn" style="width: 100%; height: 42px; margin-top: 24px;">Filtrele</button>
+                    </div>
+                    <div class="control-group control-search">
+                        <label for="history-search">Tabloda Ara</label>
+                        <input type="text" id="history-search" placeholder="Tarih veya urun adi...">
+                    </div>
+                </div>
+
+                <!-- NEW DASHBOARD CHARTS ROW -->
+                <div class="yearly-distribution-card">
+                   <div class="yearly-distribution-header">
+                       <h3 class="section-title">Yillik Gelir Dagilimi</h3>
+                       <select id="distribution-year"></select>
+                   </div>
+                   
+                   <div class="chart-container-row">
+                       <!-- Line Chart for full year trend -->
+                       <div>
+                           <h4 style="margin-bottom:12px; color:var(--muted); font-size: 0.9rem;">Aylik Toplam Satislar</h4>
+                           <div class="chart-wrapper">
+                               <canvas id="yearly-distribution-chart"></canvas>
+                           </div>
+                       </div>
+                       <!-- Stacked Area for channel splits -->
+                       <div>
+                           <h4 style="margin-bottom:12px; color:var(--muted); font-size: 0.9rem;">Kanal Bazli Dagilim</h4>
+                           <div class="chart-wrapper">
+                               <canvas id="monthly-stacked-chart"></canvas>
+                           </div>
+                       </div>
+                   </div>
+
+                   <div id="yearly-distribution-list" class="yearly-distribution-list" style="margin-top: 24px;"></div>
+                </div>
+
+                <!-- BOTTOM SPLIT: TABLE vs CALCULATOR -->
+                <div class="history-bottom-section" style="grid-template-columns: 2fr 1fr;">
+                    
+                    <div class="history-table-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                            <h3 style="margin:0;">Gunluk Dokum</h3>
+                            <span style="font-size:0.8rem; color:var(--muted)">Detay goruntulemek icin satira tiklayiniz</span>
+                        </div>
+                        <div id="history-container">
+                            <!-- Log data will be loaded here -->
+                        </div>
+                        <div class="history-pagination" id="history-pagination">
+                            <button id="prev-page-btn" type="button" class="secondary">Onceki</button>
+                            <span id="page-info">Sayfa 1 / 1</span>
+                            <button id="next-page-btn" type="button" class="secondary">Sonraki</button>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:24px;">
+                        <div class="monthly-calc">
+                            <h3 class="section-title">Donem Secimli Analiz</h3>
+                            <div class="calc-input-group" style="margin-bottom:12px;">
+                                <label>Tarih Araligi Secimi</label>
+                                <input type="text" id="range-input" class="range-picker-single" placeholder="Aralik secin" readonly>
+                            </div>
+                            <div class="calc-input-divider" style="margin: 8px 0;">veya</div>
+                            <div class="calc-input-group" style="margin-bottom:16px;">
+                                <label>Tek Ay Secimi</label>
+                                <select id="month-input">
+                                    <option value="">Ay secin</option>
+                                </select>
+                            </div>
+                            <div class="monthly-action-row" style="margin-bottom:20px;">
+                                <button id="calculate-btn" class="calculate-monthly-btn" style="width:100%;">Hesapla</button>
+                                <button id="show-product-totals-btn" type="button" class="secondary" style="width:100%;">Urun Raporu</button>
+                            </div>
+
+                            <hr style="border:0; border-top:1px solid var(--border); margin: 16px 0;">
+
+                            <h4 style="margin: 16px 0 12px; color:var(--muted); font-size: 0.9rem;">Kanallara Gore Sonuc</h4>
+                            <div id="monthly-results">
+                                <div class="calc-row"><span>Kasa:</span> <strong id="res-kasa">-</strong></div>
+                                <div class="calc-row"><span>Trendyol:</span> <strong id="res-trendyol">-</strong></div>
+                                <div class="calc-row"><span>YemekSepeti:</span> <strong id="res-yemeksepeti">-</strong></div>
+                                <div class="calc-row"><span>Migros:</span> <strong id="res-migros">-</strong></div>
+                                <div class="calc-row calc-total" style="background:#ecfdf5; padding: 12px; margin-top: 12px; border-radius: 8px;">
+                                    <span style="color:#065f46">Toplam:</span> <strong id="res-total" style="color:#047857">-</strong>
+                                </div>
+                            </div>
+                            
+                            <div class="monthly-chart-card" style="margin-top: 24px; border:none; padding:0; background:transparent;">
+                                <div class="chart-wrapper" style="height: 220px;">
+                                    <canvas id="monthly-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="day-detail-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="day-detail-modal-title">Gun Detayi</h3>
+                <button id="day-detail-close" type="button" class="secondary">Kapat</button>
+            </div>
+            <div id="day-detail-modal-body"></div>
+        </div>
+    </div>
+
+    <div id="period-products-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="period-products-title">Donem Urun Satislari</h3>
+                <button id="period-products-close" type="button" class="secondary">Kapat</button>
+            </div>
+            <div id="period-products-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script type="module" src="js/pages/history.js"></script>
+    <script type="module" src="js/ui/sidebar.js"></script>
+</body>
+</html>

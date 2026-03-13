@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <nav class="sidebar" id="sidebar-container"></nav>
+        <main class="main-content dashboard-main">
+            <h1>Gun Sonu Paneli</h1>
+            <div id="sales-data-container">
+                <!-- Sales channels columns (KASA, TRENDYOL, etc.) will be loaded here -->
+            </div>
+
+            <div class="dashboard-footer">
+                <div class="footer-left">
+                     <button id="save-sales-data">Gün Sonu</button>
+                </div>
+                
+                <div class="footer-center">
+                    <div class="date-entry-container">
+                        <label>Tarih:</label>
+                        <input type="text" id="manual-date" placeholder="02.03.2024">
+                        <span class="date-hint">Örn:02.03.2024</span>
+                        <input type="date" id="date-picker" class="hidden-date-picker">
+                    </div>
+                </div>
+
+                <div class="footer-right">
+                    <div class="payment-types">
+                        <div class="payment-box">
+                            <label>Kasa</label>
+                            <input type="number" id="payment-kasa" value="0">
+                        </div>
+                        <div class="payment-box">
+                            <label>Visa</label>
+                            <input type="number" id="payment-visa" value="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="day-end-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="day-end-modal-title">Gun Sonu Ozeti</h3>
+                <button id="day-end-close" type="button">Kapat</button>
+            </div>
+            <div id="day-end-body"></div>
+            <div class="modal-footer-actions">
+                <button id="day-end-confirm-save" type="button">Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/pages/dashboard.js"></script>
+    <script type="module" src="js/ui/sidebar.js"></script>
+</body>
+</html>

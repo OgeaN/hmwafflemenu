@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiyat Hesaplama</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <nav class="sidebar" id="sidebar-container"></nav>
+        <main class="main-content">
+            <h1>Fiyat Hesaplama</h1>
+            <div class="calculator-form">
+                <label for="base-price">Brut Tutar:</label>
+                <input type="number" id="base-price" placeholder="Brut tutar girin">
+                <label for="firm-select">Platform:</label>
+                <select id="firm-select"></select>
+                <button id="calculate-btn">Hesapla</button>
+            </div>
+            <div id="results-container">
+                <!-- Results will be displayed here -->
+            </div>
+        </main>
+    </div>
+    <script type="module" src="js/pages/priceCalculator.js"></script>
+    <script type="module" src="js/ui/sidebar.js"></script>
+</body>
+</html>

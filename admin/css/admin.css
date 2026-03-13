@@ -504,6 +504,10 @@ tbody tr:hover {
     transform: translateY(0) scale(1);
     transition: var(--transition);
 }
+.modal-overlay#day-detail-modal .modal-card,
+.modal-overlay#period-products-modal .modal-card {
+    max-width: min(1100px, 96vw);
+}
 .modal-overlay.hidden .modal-card {
     transform: translateY(20px) scale(0.95);
 }
@@ -524,6 +528,10 @@ tbody tr:hover {
     padding: 24px;
     overflow-y: auto;
 }
+#day-detail-modal-body,
+#period-products-body {
+    max-height: calc(90vh - 90px);
+}
 
 .modal-footer {
     padding: 20px 24px;
@@ -541,7 +549,15 @@ tbody tr:hover {
     justify-content: flex-end;
 }
 
-.hidden-date-picker { display:none; }
+.hidden-date-picker {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    padding: 0;
+}
 
 /* Products Layout */
 .products-firms-layout {
@@ -786,6 +802,17 @@ tbody tr:hover {
     padding: 4px 0;
     display: flex;
     justify-content: space-between;
+    gap: 12px;
+}
+
+.day-detail-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.day-detail-table-wrap table {
+    min-width: 760px;
 }
 
 .history-row-clickable { cursor: pointer; }
@@ -917,6 +944,15 @@ tbody tr:hover {
     .dashboard-footer {
         flex-direction: column;
         align-items: stretch;
+    }
+    .modal-overlay#day-detail-modal .modal-card,
+    .modal-overlay#period-products-modal .modal-card {
+        max-width: 98vw;
+    }
+    .modal-header,
+    #day-detail-modal-body,
+    #period-products-body {
+        padding: 16px;
     }
     .history-controls {
         flex-direction: column;

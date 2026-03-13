@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <nav class="sidebar" id="sidebar-container"></nav>
+        <main class="main-content">
+            <div class="products-firms-layout">
+                <div class="left-section">
+                    <h1>ÜRÜNLER</h1>
+                    <div id="products-table-container">
+                        <!-- Products table will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="right-section">
+                    <div class="firms-table-container">
+                        <table id="firms-table">
+                            <thead>
+                                <tr>
+                                    <th>Firma Adı</th>
+                                    <th>Kesinti Oranı</th>
+                                    <th>Vergi Oranı</th>
+                                </tr>
+                            </thead>
+                            <tbody id="firms-tbody">
+                                <!-- Firms will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="add-product-container">
+                        <h3>YENİ ÜRÜN EKLE</h3>
+                        <form id="add-product-form">
+                            <div class="form-group-inline">
+                                <label for="new-product-name">ÜRÜN ADI:</label>
+                                <input type="text" id="new-product-name" required>
+                            </div>
+                            <div class="form-group-inline">
+                                <label for="new-store-price">DÜKKAN SATIŞ FİYATI:</label>
+                                <input type="number" id="new-store-price" value="0">
+                            </div>
+                            <div class="form-group-inline">
+                                <label for="new-trendyol-price">TRENDYOL FİYATI:</label>
+                                <input type="number" id="new-trendyol-price" value="0">
+                            </div>
+                            <div class="form-group-inline">
+                                <label for="new-yemeksepeti-price">YEMEKSEPETİ FİYATI:</label>
+                                <input type="number" id="new-yemeksepeti-price" value="0">
+                            </div>
+                            <div class="form-group-inline">
+                                <label for="new-migros-price">MİGROS FİYATI:</label>
+                                <input type="number" id="new-migros-price" value="0">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" id="add-product-btn">EKLE</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="js/pages/products.js"></script>
+    <script type="module" src="js/ui/sidebar.js"></script>
+</body>
+</html>
