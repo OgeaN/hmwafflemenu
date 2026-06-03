@@ -1,4 +1,21 @@
-const menu = [
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+
+// Admin paneliyle aynı Firebase projesi (sadece okuma yapılır).
+const firebaseConfig = {
+    apiKey: "AIzaSyAbbbtdZDoWWdWx8gZD5pTqme4zNtn5I6Q",
+    authDomain: "hmwaffle-60e3e.firebaseapp.com",
+    databaseURL: "https://hmwaffle-60e3e-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "hmwaffle-60e3e",
+    storageBucket: "hmwaffle-60e3e.firebasestorage.app",
+    messagingSenderId: "566279108076",
+    appId: "1:566279108076:web:7f6e8247de4c68f73bbcc9",
+    measurementId: "G-4KL5XBC9TD"
+};
+
+// Firebase boş veya erişilemez olursa kullanılacak yedek (fallback) liste.
+// admin/js/data/seedMenu.js ile aynı tutulmalıdır.
+const seedMenu = [
     { name: "Çiçek Waffle", price: 250, image: "assets/menu-images/cicek-waffle.jpg", category: "Waffle" },
     { name: "Bubble Waffle", price: 300, image: "assets/menu-images/bubble-waffle.jpg", category: "Waffle" },
     { name: "Bardak Waffle", price: 190, image: "assets/menu-images/bardak-waffle.jpg", category: "Waffle" },
@@ -64,6 +81,9 @@ const menu = [
     
 ];
 
+// Ekranda gösterilen aktif menü. Önce yedek listeyle başlar, Firebase verisi gelince güncellenir.
+let menu = seedMenu;
+
 function renderCategoryTabs(categories, activeCategory) {
     const tabs = document.getElementById('category-tabs');
     tabs.innerHTML = Object.keys(categories).map(cat => `
@@ -92,6 +112,12 @@ function closeImageModal() {
     if (modal) modal.classList.remove('show');
 }
 
+// Modül kapsamındaki bu fonksiyonlar HTML'deki inline onclick'lerden erişilebilsin diye global yapılır.
+window.openImageModal = openImageModal;
+window.closeImageModal = closeImageModal;
+
+let currentCategory = null;
+
 function renderMenu(selectedCategory) {
     const menuList = document.getElementById('menu-list');
     menuList.className = 'qr-grid';
@@ -101,8 +127,17 @@ function renderMenu(selectedCategory) {
         if (!categories[item.category]) categories[item.category] = [];
         categories[item.category].push(item);
     });
-    // İlk kategori default seçili
-    const activeCategory = selectedCategory || Object.keys(categories)[0];
+    // Seçili kategori: parametre > önceki seçim (hâlâ varsa) > ilk kategori
+    let activeCategory = selectedCategory || currentCategory;
+    if (!activeCategory || !categories[activeCategory]) {
+        activeCategory = Object.keys(categories)[0];
+    }
+    currentCategory = activeCategory;
+    if (!activeCategory) {
+        menuList.innerHTML = '';
+        renderCategoryTabs(categories, activeCategory);
+        return;
+    }
     renderCategoryTabs(categories, activeCategory);
     menuList.innerHTML = `
         ${categories[activeCategory].map(item => `
@@ -130,4 +165,62 @@ window.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.addEventListener('DOMContentLoaded', () => renderMenu());
+// Firebase QrMenu düğümünü canlı dinle; gelen veriyi gizli olmayanlarla,
+// kategori-içi 'order' sırasına göre menüye dönüştür.
+function applyQrMenuSnapshot(value) {
+    if (!value) {
+        return false;
+    }
+    const rows = Object.values(value)
+        .filter(item => item && item.hidden !== true && (item.name || '').toString().trim() !== '')
+        .map(item => ({
+            name: String(item.name ?? ''),
+            price: Number(item.price) || 0,
+            image: String(item.image ?? ''),
+            category: String(item.category ?? 'Diğer'),
+            order: Number(item.order) || 0,
+        }));
+
+    if (rows.length === 0) {
+        return false;
+    }
+
+    // Kategori ilk görülme sırasını koru, kategori içinde 'order'a göre sırala.
+    const categoryOrder = [];
+    rows.forEach(r => {
+        if (!categoryOrder.includes(r.category)) categoryOrder.push(r.category);
+    });
+    rows.sort((a, b) => {
+        const catDiff = categoryOrder.indexOf(a.category) - categoryOrder.indexOf(b.category);
+        if (catDiff !== 0) return catDiff;
+        return a.order - b.order;
+    });
+
+    menu = rows;
+    return true;
+}
+
+function startMenu() {
+    // Önce yedek listeyle hemen render et (Firebase yavaş/erişilemez olsa bile menü görünsün).
+    renderMenu();
+
+    try {
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        onValue(
+            ref(db, 'QrMenu'),
+            (snapshot) => {
+                if (applyQrMenuSnapshot(snapshot.val())) {
+                    renderMenu();
+                }
+            },
+            () => {
+                // Okuma hatası: yedek liste zaten gösteriliyor, sessizce devam et.
+            }
+        );
+    } catch (e) {
+        // Firebase başlatılamadı: yedek liste gösterilmeye devam eder.
+    }
+}
+
+document.addEventListener('DOMContentLoaded', startMenu);

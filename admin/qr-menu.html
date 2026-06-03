@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Menü</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <nav class="sidebar" id="sidebar-container"></nav>
+        <main class="main-content">
+            <div class="qr-admin-header">
+                <h1>QR MENÜ</h1>
+                <p class="qr-admin-hint">Buradaki değişiklikler müşterilerin gördüğü QR menüye anında yansır.</p>
+            </div>
+
+            <div class="add-product-container qr-add-container">
+                <h3>YENİ ÜRÜN EKLE</h3>
+                <form id="add-qr-form">
+                    <div class="form-group-inline">
+                        <label for="new-qr-name">ÜRÜN ADI:</label>
+                        <input type="text" id="new-qr-name" required>
+                    </div>
+                    <div class="form-group-inline">
+                        <label for="new-qr-price">FİYAT (₺):</label>
+                        <input type="number" id="new-qr-price" step="0.01" min="0" value="0">
+                    </div>
+                    <div class="form-group-inline">
+                        <label for="new-qr-category">KATEGORİ:</label>
+                        <input type="text" id="new-qr-category" list="qr-category-list" required>
+                        <datalist id="qr-category-list"></datalist>
+                    </div>
+                    <div class="form-group-inline">
+                        <label for="new-qr-image">GÖRSEL YOLU:</label>
+                        <input type="text" id="new-qr-image" placeholder="assets/menu-images/ornek.jpg">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="add-qr-btn">EKLE</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="qr-menu-container">
+                <!-- Kategoriye göre gruplanmış ürünler buraya yüklenecek -->
+            </div>
+        </main>
+    </div>
+    <script type="module" src="js/pages/qr-menu.js"></script>
+    <script type="module" src="js/ui/sidebar.js"></script>
+</body>
+</html>

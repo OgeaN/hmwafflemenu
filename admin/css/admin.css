@@ -1291,3 +1291,93 @@ tbody tr:hover {
     }
 }
 
+/* QR Menü Yönetimi */
+.qr-admin-header {
+    margin-bottom: 24px;
+}
+.qr-admin-hint {
+    color: var(--muted);
+    margin-top: 4px;
+}
+.qr-add-container {
+    max-width: 640px;
+}
+
+.qr-category-section {
+    margin-bottom: 28px;
+}
+.qr-category-title {
+    font-size: 1.05rem;
+    color: var(--accent);
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.qr-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.qr-row {
+    display: grid;
+    grid-template-columns: 28px minmax(140px, 2fr) 90px minmax(120px, 1.2fr) minmax(160px, 2fr) auto auto auto;
+    gap: 10px;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+}
+.qr-row.qr-row-hidden {
+    opacity: 0.55;
+}
+.qr-row.qr-dragging {
+    opacity: 0.4;
+    border-style: dashed;
+    border-color: var(--accent);
+}
+.qr-drag-handle {
+    cursor: grab;
+    color: var(--muted);
+    text-align: center;
+    user-select: none;
+    font-size: 1.1rem;
+}
+.qr-row .qr-field {
+    margin: 0;
+    width: 100%;
+}
+.qr-row button {
+    white-space: nowrap;
+}
+.qr-toggle-btn {
+    background: var(--surface-soft);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+.qr-toggle-btn:hover {
+    border-color: var(--accent);
+}
+.qr-delete-btn {
+    background: transparent;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+.qr-delete-btn:hover {
+    background: var(--danger);
+    color: #fff;
+}
+
+@media (max-width: 900px) {
+    .qr-row {
+        grid-template-columns: 24px 1fr 1fr;
+        grid-auto-rows: auto;
+    }
+    .qr-drag-handle {
+        grid-row: 1 / span 2;
+    }
+}
+
