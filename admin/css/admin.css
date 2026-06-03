@@ -669,6 +669,43 @@ tbody tr:hover {
     line-height: 1;
 }
 
+/* Gizlenebilir gelir tutari */
+.revenue-value-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.revenue-value-row strong {
+    transition: filter 0.2s ease;
+}
+/* Tutar gizliyken: metin secilemez ve bulanik maske */
+.revenue-value-row strong.is-hidden-amount {
+    filter: blur(9px);
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+}
+.revenue-toggle-btn {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
+.revenue-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: none;
+    box-shadow: none;
+}
+/* Ikon durum gecisi: varsayilan (gizli) -> eye-off goster */
+.revenue-toggle-btn .icon-eye { display: none; }
+.revenue-toggle-btn .icon-eye-off { display: block; }
+.revenue-toggle-btn[aria-pressed="true"] .icon-eye { display: block; }
+.revenue-toggle-btn[aria-pressed="true"] .icon-eye-off { display: none; }
+
 .history-layout {
     display: grid;
     gap: 24px;
@@ -676,7 +713,7 @@ tbody tr:hover {
 
 .history-bottom-section {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 24px;
 }
 
@@ -732,6 +769,32 @@ tbody tr:hover {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
+}
+
+.daily-date-bar {
+    margin-bottom: 16px;
+}
+.daily-date-bar label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.daily-date-field {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.daily-date-field input {
+    flex: 1;
+    cursor: pointer;
+    background: var(--surface-soft);
+    font-weight: 600;
+}
+.daily-date-field #daily-date-clear {
+    flex: 0 0 auto;
+    white-space: nowrap;
 }
 
 .history-pagination {
@@ -1252,13 +1315,28 @@ tbody tr:hover {
     }
     .sidebar {
         flex-direction: row;
+        align-items: center;
+        gap: 8px;
         padding: 16px;
         overflow-x: auto;
     }
     .sidebar h3 { display: none; }
+    /* Mobilde marka/logo bloğu dikey alanı boşa harcamasın */
+    .sidebar > div:first-child { display: none; }
     .sidebar ul {
         display: flex;
         gap: 8px;
+    }
+    .sidebar a {
+        white-space: nowrap;
+        padding: 10px 12px;
+    }
+    #logout-btn {
+        width: auto;
+        margin-top: 0;
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 10px 14px;
     }
     .main-content {
         padding: 20px;
@@ -1286,9 +1364,211 @@ tbody tr:hover {
     .history-summary-bar {
         grid-template-columns: 1fr;
     }
+    .yearly-distribution-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    .qr-field-row {
+        grid-template-columns: 1fr;
+    }
+    .form-group-inline {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+    .monthly-action-row {
+        grid-template-columns: 1fr;
+    }
     .receipt-form-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Telefon ölçeği */
+@media (max-width: 600px) {
+    .main-content {
+        padding: 16px 14px;
+    }
+    h1 {
+        font-size: 1.4rem;
+    }
+    /* Dokunma hedefleri */
+    input, select, button {
+        min-height: 44px;
+    }
+    .hidden-date-picker {
+        min-height: 0;
+    }
+    .qr-icon-btn, .increment-btn {
+        width: 40px;
+        height: 40px;
+    }
+    .revenue-toggle-btn {
+        width: 40px;
+        height: 40px;
+        min-height: 40px;
+    }
+
+    /* Dashboard: kanal sütunları tek kolon, sabit yükseklik kaldır */
+    .dashboard-main {
+        height: auto;
+    }
+    #sales-data-container {
+        grid-template-columns: 1fr;
+    }
+    .input-with-button input {
+        width: 48px;
+    }
+
+    /* Dashboard footer öğeleri tam genişlik */
+    .payment-types {
+        flex-direction: column;
+    }
+    .payment-box {
+        width: 100%;
+    }
+    .date-entry-container {
+        flex-wrap: wrap;
+    }
+    .date-entry-container input {
+        width: 100%;
+    }
+
+    .summary-chip strong {
+        font-size: 1.4rem;
+    }
+
+    /* Telefonda tam ekran modal */
+    .modal-overlay {
+        align-items: stretch;
+    }
+    .modal-card,
+    .modal-overlay#day-detail-modal .modal-card,
+    .modal-overlay#period-products-modal .modal-card {
+        max-width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    /* ===== Tablo -> Kart dönüşümü (history & products) =====
+       6 kolonlu yoğun tablolar telefonda yatay kaydırma yerine
+       dikey kart yığınına dönüşür; her hücre kolon etiketini solda gösterir. */
+    #products-table-container table,
+    #history-container table,
+    #firms-table {
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+    /* Başlık satırını görsel olarak gizle (erişilebilir kalır) */
+    #products-table-container thead,
+    #history-container thead,
+    #firms-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+    #products-table-container tbody tr,
+    #history-container tbody tr,
+    #firms-table tbody tr {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        padding: 4px 14px;
+        margin-bottom: 12px;
+    }
+    #products-table-container tbody tr:hover,
+    #history-container tbody tr:hover,
+    #firms-table tbody tr:hover {
+        background: var(--surface);
+    }
+    #products-table-container td,
+    #history-container td,
+    #firms-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--surface-soft);
+        text-align: right;
+    }
+    #products-table-container td:last-child,
+    #history-container td:last-child,
+    #firms-table td:last-child {
+        border-bottom: none;
+    }
+    #products-table-container td::before,
+    #history-container td::before,
+    #firms-table td::before {
+        font-weight: 600;
+        color: var(--muted);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        text-align: left;
+        white-space: nowrap;
+    }
+    #products-table-container td input,
+    #firms-table td input {
+        width: 50%;
+        max-width: 160px;
+        text-align: right;
+    }
+
+    /* History etiketleri: Tarih | Kasa | Trendyol | Yemeksepeti | Migros | Toplam */
+    #history-container td:nth-child(1)::before { content: "Tarih"; }
+    #history-container td:nth-child(2)::before { content: "Kasa"; }
+    #history-container td:nth-child(3)::before { content: "Trendyol"; }
+    #history-container td:nth-child(4)::before { content: "Yemeksepeti"; }
+    #history-container td:nth-child(5)::before { content: "Migros"; }
+    #history-container td:nth-child(6)::before { content: "Toplam"; }
+    /* İlk hücre (tarih) kart başlığı gibi */
+    #history-container td:nth-child(1) {
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+    #history-container td:nth-child(1)::before { display: none; }
+    #history-container tbody tr.is-selected {
+        border-left: 3px solid var(--primary);
+    }
+
+    /* Products etiketleri: Ürün | Fiyat | Trendyol | YemekSepeti | Migros | İşlem */
+    #products-table-container td:nth-child(2)::before { content: "Fiyat"; }
+    #products-table-container td:nth-child(3)::before { content: "Trendyol"; }
+    #products-table-container td:nth-child(4)::before { content: "YemekSepeti"; }
+    #products-table-container td:nth-child(5)::before { content: "Migros"; }
+    /* İlk hücre (ürün adı) kart başlığı */
+    #products-table-container td:nth-child(1) {
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+    #products-table-container td:nth-child(1)::before { display: none; }
+    /* Son hücre: tam genişlik Kaydet butonu, etiketsiz */
+    #products-table-container td:nth-child(6) {
+        justify-content: flex-end;
+    }
+    #products-table-container td:nth-child(6)::before { display: none; }
+    #products-table-container .save-product-btn { width: 100%; }
+
+    /* Firms etiketleri: Firma | Kesinti Oranı | Vergi Oranı */
+    #firms-table td:nth-child(2)::before { content: "Kesinti Oranı"; }
+    #firms-table td:nth-child(3)::before { content: "Vergi Oranı"; }
+    #firms-table td:nth-child(1) {
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+    #firms-table td:nth-child(1)::before { display: none; }
+
+    /* History diğer rötuşlar */
+    .history-pagination { justify-content: center; }
+    .summary-chip { padding: 14px; }
+    .summary-chip strong { font-size: 1.3rem; }
 }
 
 /* ===== QR Menü Yönetimi (modern, kompakt) ===== */

@@ -30,6 +30,7 @@ const dom = {
     sumTotalRecords: document.getElementById('sum-total-records'),
     sumFilteredRecords: document.getElementById('sum-filtered-records'),
     sumFilteredRevenue: document.getElementById('sum-filtered-revenue'),
+    toggleRevenueBtn: document.getElementById('toggle-revenue-btn'),
     distributionYearSelect: document.getElementById('distribution-year'),
     yearlyDistributionList: document.getElementById('yearly-distribution-list'),
     dayDetailModal: document.getElementById('day-detail-modal'),
@@ -40,6 +41,8 @@ const dom = {
     periodProductsClose: document.getElementById('period-products-close'),
     periodProductsTitle: document.getElementById('period-products-title'),
     periodProductsBody: document.getElementById('period-products-body'),
+    dailyDatePicker: document.getElementById('daily-date-picker'),
+    dailyDateClear: document.getElementById('daily-date-clear'),
     monthInput: document.getElementById('month-input'),
     rangeInput: document.getElementById('range-input'),
     calculateBtn: document.getElementById('calculate-btn'),
@@ -59,7 +62,15 @@ const state = {
     filteredRows: [],
     logs: {},
     products: {},
+    dailyPicker: null,
 };
+
+function toIsoDay(date) {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
 
 function formatMonthOptionLabel(value) {
     const [year, month] = String(value || '').split('-');
@@ -104,6 +115,50 @@ function initializeRangePicker() {
     });
 }
 
+function openDayByDateKey(dateKey) {
+    const selectedRow = state.allRows.find((row) => row.dateKey === dateKey);
+    if (!selectedRow) {
+        showToast('Secilen gunde kayit bulunamadi.', 'info');
+        return;
+    }
+    state.selectedDateKey = dateKey;
+    renderTablePage();
+    renderDayModal(selectedRow);
+}
+
+function refreshDailyDatePicker() {
+    if (!window.flatpickr || !dom.dailyDatePicker) {
+        return;
+    }
+
+    // Yalnizca kayitli gunler secilebilir olsun
+    const enabledDates = state.allRows.map((row) => toIsoDay(row.date));
+
+    if (state.dailyPicker) {
+        state.dailyPicker.set('enable', enabledDates);
+        state.dailyPicker.clear();
+        return;
+    }
+
+    state.dailyPicker = window.flatpickr(dom.dailyDatePicker, {
+        dateFormat: 'Y-m-d',
+        allowInput: false,
+        enable: enabledDates,
+        disableMobile: true,
+        onChange: (selectedDates) => {
+            if (!selectedDates.length) {
+                return;
+            }
+            const dateKey = state.allRows.find(
+                (row) => toIsoDay(row.date) === toIsoDay(selectedDates[0])
+            )?.dateKey;
+            if (dateKey) {
+                openDayByDateKey(dateKey);
+            }
+        },
+    });
+}
+
 function updateSummaryBar() {
     const totalRecords = state.allRows.length;
     const filteredRecords = state.filteredRows.length;
@@ -112,6 +167,12 @@ function updateSummaryBar() {
     dom.sumTotalRecords.textContent = String(totalRecords);
     dom.sumFilteredRecords.textContent = String(filteredRecords);
     dom.sumFilteredRevenue.textContent = formatCurrency(filteredRevenue);
+}
+
+function toggleRevenueVisibility() {
+    const isHidden = dom.sumFilteredRevenue.classList.toggle('is-hidden-amount');
+    dom.toggleRevenueBtn.setAttribute('aria-pressed', String(!isHidden));
+    dom.toggleRevenueBtn.title = isHidden ? 'Tutari goster' : 'Tutari gizle';
 }
 
 function openDayModal() {
@@ -455,6 +516,7 @@ async function loadHistoryData() {
         state.filteredRows = [];
         updateSummaryBar();
         renderTablePage();
+        refreshDailyDatePicker();
         return;
     }
 
@@ -463,6 +525,7 @@ async function loadHistoryData() {
 
     state.allRows = buildHistoryRows(state.logs, state.products, startDate, endDate);
     applySearchAndRender();
+    refreshDailyDatePicker();
 
     const availableYears = getAvailableYears(state.logs);
     dom.distributionYearSelect.innerHTML = availableYears
@@ -521,6 +584,7 @@ function handleShowProductTotals() {
 function wireEvents() {
     dom.filterBtn.addEventListener('click', loadHistoryData);
     dom.searchInput.addEventListener('input', applySearchAndRender);
+    dom.toggleRevenueBtn.addEventListener('click', toggleRevenueVisibility);
 
     dom.prevPageBtn.addEventListener('click', () => {
         if (state.currentPage > 1) {
@@ -535,6 +599,14 @@ function wireEvents() {
             state.currentPage += 1;
             renderTablePage();
         }
+    });
+
+    dom.dailyDateClear.addEventListener('click', () => {
+        if (state.dailyPicker) {
+            state.dailyPicker.clear();
+        }
+        state.selectedDateKey = null;
+        renderTablePage();
     });
 
     dom.calculateBtn.addEventListener('click', handleMonthlyCalculate);

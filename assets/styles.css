@@ -136,4 +136,8 @@
     .qr-card-name { font-size: 0.85rem !important; }
     .qr-card-price { font-size: 1rem !important; }
     .qr-card-img { margin-bottom: 0.5rem !important; aspect-ratio: 1 / 1 !important; }
+    .qr-header { margin-bottom: 1.25rem; padding-bottom: 1.25rem; }
+    .category-tab { padding: 0.6rem 1.1rem; font-size: 0.85rem; }
+    .modal-close-btn { font-size: 2rem; padding: 0.25rem; }
+    .modal-content { max-height: 70vh; }
 }
