@@ -11,38 +11,52 @@
         <nav class="sidebar" id="sidebar-container"></nav>
         <main class="main-content">
             <div class="qr-admin-header">
-                <h1>QR MENÜ</h1>
-                <p class="qr-admin-hint">Buradaki değişiklikler müşterilerin gördüğü QR menüye anında yansır.</p>
+                <div>
+                    <h1>QR Menü</h1>
+                    <p class="qr-admin-hint">Değişiklikler müşterilerin gördüğü QR menüye anında yansır.</p>
+                </div>
+                <div class="qr-search-box">
+                    <span class="qr-search-icon">🔍</span>
+                    <input type="text" id="qr-search" placeholder="Ürün veya kategori ara...">
+                </div>
             </div>
 
-            <div class="add-product-container qr-add-container">
-                <h3>YENİ ÜRÜN EKLE</h3>
-                <form id="add-qr-form">
-                    <div class="form-group-inline">
-                        <label for="new-qr-name">ÜRÜN ADI:</label>
-                        <input type="text" id="new-qr-name" required>
-                    </div>
-                    <div class="form-group-inline">
-                        <label for="new-qr-price">FİYAT (₺):</label>
-                        <input type="number" id="new-qr-price" step="0.01" min="0" value="0">
-                    </div>
-                    <div class="form-group-inline">
-                        <label for="new-qr-category">KATEGORİ:</label>
-                        <input type="text" id="new-qr-category" list="qr-category-list" required>
-                        <datalist id="qr-category-list"></datalist>
-                    </div>
-                    <div class="form-group-inline">
-                        <label for="new-qr-image">GÖRSEL YOLU:</label>
-                        <input type="text" id="new-qr-image" placeholder="assets/menu-images/ornek.jpg">
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" id="add-qr-btn">EKLE</button>
-                    </div>
-                </form>
-            </div>
+            <div class="qr-admin-grid">
+                <!-- Sol: yeni ürün ekleme kartı -->
+                <aside class="qr-add-card">
+                    <h3>Yeni Ürün Ekle</h3>
+                    <form id="add-qr-form">
+                        <div class="qr-add-preview">
+                            <img id="new-qr-image-preview" src="assets/menu-images/default.jpg" alt="Önizleme"
+                                 onerror="this.src='assets/menu-images/default.jpg'">
+                        </div>
+                        <label class="qr-field-group">
+                            <span>Ürün adı</span>
+                            <input type="text" id="new-qr-name" required placeholder="Örn: Çikolatalı Waffle">
+                        </label>
+                        <div class="qr-field-row">
+                            <label class="qr-field-group">
+                                <span>Fiyat (₺)</span>
+                                <input type="number" id="new-qr-price" step="0.01" min="0" value="0">
+                            </label>
+                            <label class="qr-field-group">
+                                <span>Kategori</span>
+                                <input type="text" id="new-qr-category" list="qr-category-list" required placeholder="Waffle">
+                                <datalist id="qr-category-list"></datalist>
+                            </label>
+                        </div>
+                        <label class="qr-field-group">
+                            <span>Görsel (URL veya yol)</span>
+                            <input type="text" id="new-qr-image" placeholder="https://... veya assets/menu-images/...">
+                        </label>
+                        <button type="submit" id="add-qr-btn" class="qr-add-btn">+ Ürünü Ekle</button>
+                    </form>
+                </aside>
 
-            <div id="qr-menu-container">
-                <!-- Kategoriye göre gruplanmış ürünler buraya yüklenecek -->
+                <!-- Sağ: kategoriye göre ürün kartları -->
+                <div id="qr-menu-container">
+                    <!-- JS tarafından doldurulacak -->
+                </div>
             </div>
         </main>
     </div>

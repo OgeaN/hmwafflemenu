@@ -1291,75 +1291,253 @@ tbody tr:hover {
     }
 }
 
-/* QR Menü Yönetimi */
+/* ===== QR Menü Yönetimi (modern, kompakt) ===== */
 .qr-admin-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 24px;
 }
 .qr-admin-hint {
     color: var(--muted);
     margin-top: 4px;
 }
-.qr-add-container {
-    max-width: 640px;
+.qr-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.qr-search-icon {
+    position: absolute;
+    left: 12px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    pointer-events: none;
+}
+.qr-search-box input {
+    margin: 0;
+    width: 260px;
+    max-width: 100%;
+    padding-left: 34px;
 }
 
-.qr-category-section {
-    margin-bottom: 28px;
+/* İki kolon: solda ekleme kartı (sticky), sağda ürün listesi */
+.qr-admin-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 24px;
+    align-items: start;
 }
-.qr-category-title {
-    font-size: 1.05rem;
-    color: var(--accent);
-    margin: 0 0 12px;
+
+.qr-add-card {
+    position: sticky;
+    top: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 20px;
+}
+.qr-add-card h3 {
+    margin: 0 0 16px;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text);
+}
+.qr-add-preview {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px dashed var(--border);
+    background: var(--surface-soft);
+    margin-bottom: 14px;
+}
+.qr-add-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.qr-add-btn {
+    width: 100%;
+    margin-top: 6px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: #111827;
+    font-weight: 700;
+    border: none;
+}
+.qr-add-btn:hover {
+    filter: brightness(1.05);
+}
+
+/* Ortak alan etiketi + input grubu */
+.qr-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+.qr-field-group > span {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+.qr-field-group .qr-field,
+.qr-add-card input {
+    margin: 0;
+    width: 100%;
+}
+.qr-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Kategori bölümleri */
+.qr-category-section {
+    margin-bottom: 24px;
+}
+.qr-category-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--border);
+}
+.qr-category-title {
+    font-size: 1rem;
+    color: var(--accent);
+    margin: 0;
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
-.qr-rows {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.qr-category-count {
+    font-size: 0.75rem;
+    color: var(--muted);
 }
 
-.qr-row {
+/* Ürün kartları ızgarası */
+.qr-cards {
     display: grid;
-    grid-template-columns: 28px minmax(140px, 2fr) 90px minmax(120px, 1.2fr) minmax(160px, 2fr) auto auto auto;
-    gap: 10px;
-    align-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+}
+
+.qr-card-admin {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s, opacity 0.15s;
 }
-.qr-row.qr-row-hidden {
+.qr-card-admin:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-sm);
+}
+.qr-card-admin.is-hidden {
     opacity: 0.55;
 }
-.qr-row.qr-dragging {
+.qr-card-admin.qr-dragging {
     opacity: 0.4;
     border-style: dashed;
     border-color: var(--accent);
 }
+
+/* Kartın üst (kompakt) kısmı */
+.qr-card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
 .qr-drag-handle {
     cursor: grab;
     color: var(--muted);
-    text-align: center;
     user-select: none;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    flex: 0 0 auto;
 }
-.qr-row .qr-field {
-    margin: 0;
+.qr-thumb {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--surface-soft);
+}
+.qr-thumb img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
-.qr-row button {
+.qr-card-head {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.qr-card-title {
+    font-weight: 600;
+    color: var(--text);
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.qr-toggle-btn {
+.qr-card-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.qr-card-quick {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 4px;
+}
+.qr-icon-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface-soft);
     color: var(--text);
     border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    line-height: 1;
 }
-.qr-toggle-btn:hover {
+.qr-icon-btn:hover {
     border-color: var(--accent);
+}
+
+/* Kartın açılır düzenleme gövdesi */
+.qr-card-body {
+    display: none;
+    padding: 0 12px 12px;
+    border-top: 1px solid var(--border);
+}
+.qr-card-admin.is-open .qr-card-body {
+    display: block;
+    padding-top: 12px;
+}
+.qr-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+.qr-save-btn {
+    flex: 1;
 }
 .qr-delete-btn {
     background: transparent;
@@ -1371,13 +1549,12 @@ tbody tr:hover {
     color: #fff;
 }
 
-@media (max-width: 900px) {
-    .qr-row {
-        grid-template-columns: 24px 1fr 1fr;
-        grid-auto-rows: auto;
+@media (max-width: 980px) {
+    .qr-admin-grid {
+        grid-template-columns: 1fr;
     }
-    .qr-drag-handle {
-        grid-row: 1 / span 2;
+    .qr-add-card {
+        position: static;
     }
 }
 
