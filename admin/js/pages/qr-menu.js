@@ -29,6 +29,12 @@ function escapeHtml(value) {
         .replace(/>/g, '&gt;');
 }
 
+// Virgül veya nokta ile yazılan fiyatı sayıya çevirir ("12,50" -> 12.5).
+function parsePrice(value) {
+    const n = parseFloat(String(value).replace(',', '.').trim());
+    return Number.isFinite(n) && n >= 0 ? n : 0;
+}
+
 // Hem internet URL'i (http/https) hem yerel yolu (assets/...) olduğu gibi kabul eder.
 function resolvePreviewSrc(image) {
     const val = String(image ?? '').trim();
@@ -81,7 +87,7 @@ function cardTemplate(item) {
                 <div class="qr-field-row">
                     <label class="qr-field-group">
                         <span>Fiyat (₺)</span>
-                        <input class="qr-field" type="number" step="0.01" min="0" data-key="price" value="${item.price ?? 0}">
+                        <input class="qr-field" type="text" inputmode="decimal" data-key="price" value="${item.price ?? 0}">
                     </label>
                     <label class="qr-field-group">
                         <span>Kategori</span>
@@ -136,7 +142,7 @@ function readCard(card) {
     const data = {};
     card.querySelectorAll('.qr-field').forEach(input => {
         const key = input.dataset.key;
-        data[key] = key === 'price' ? (parseFloat(input.value) || 0) : input.value.trim();
+        data[key] = key === 'price' ? parsePrice(input.value) : input.value.trim();
     });
     const id = card.dataset.id;
     data.order = items[id]?.order ?? 0;
@@ -316,7 +322,7 @@ async function handleAdd(e) {
 
     const newItem = {
         name,
-        price: parseFloat(document.getElementById('new-qr-price').value) || 0,
+        price: parsePrice(document.getElementById('new-qr-price').value),
         category,
         image: newImageInput.value.trim(),
         order: maxOrder + 1,
