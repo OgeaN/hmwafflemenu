@@ -1448,6 +1448,11 @@ tbody tr:hover {
     border-style: dashed;
     border-color: var(--accent);
 }
+/* Düzenleme alanlarında metin normal şekilde seçilebilsin */
+.qr-card-admin .qr-field {
+    user-select: text;
+    -webkit-user-select: text;
+}
 
 /* Kartın üst (kompakt) kısmı */
 .qr-card-top {

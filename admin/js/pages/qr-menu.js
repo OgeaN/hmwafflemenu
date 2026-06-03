@@ -63,9 +63,9 @@ function refreshCategoryDatalist() {
 function cardTemplate(item) {
     const src = escapeHtml(resolvePreviewSrc(item.image));
     return `
-        <article class="qr-card-admin${item.hidden ? ' is-hidden' : ''}" data-id="${item.id}" draggable="true">
+        <article class="qr-card-admin${item.hidden ? ' is-hidden' : ''}" data-id="${item.id}">
             <div class="qr-card-top">
-                <span class="qr-drag-handle" title="Sürükleyerek sırala">⠿</span>
+                <span class="qr-drag-handle" title="Sürükleyerek sırala" data-drag-handle>⠿</span>
                 <div class="qr-thumb">
                     <img src="${src}" alt="${escapeHtml(item.name)}" data-role="thumb"
                          onerror="this.src='${PLACEHOLDER_IMG}'">
@@ -248,11 +248,35 @@ function handleContainerInput(e) {
 }
 
 // --- Sürükle-bırak sıralama (kategori içinde) ---
+// Kart varsayılan olarak draggable DEĞİL; aksi halde içindeki input'larda
+// tıklama/metin seçimi bozulur (imleç başa düşer). Sürükleme yalnızca tutamaç
+// (⠿) basılı tutulduğunda etkinleşir.
 let dragCard = null;
+let armedCard = null;
+
+function handleHandleMouseDown(e) {
+    const handle = e.target.closest('[data-drag-handle]');
+    if (!handle) return;
+    const card = handle.closest('.qr-card-admin');
+    if (!card) return;
+    armedCard = card;
+    card.setAttribute('draggable', 'true');
+}
+
+function disarmDrag() {
+    if (armedCard) {
+        armedCard.removeAttribute('draggable');
+        armedCard = null;
+    }
+}
 
 function handleDragStart(e) {
     const card = e.target.closest('.qr-card-admin');
-    if (!card) return;
+    // Yalnızca tutamaçla "hazırlanmış" kart sürüklenebilir.
+    if (!card || card !== armedCard) {
+        e.preventDefault();
+        return;
+    }
     dragCard = card;
     card.classList.add('qr-dragging');
     e.dataTransfer.effectAllowed = 'move';
@@ -279,6 +303,7 @@ async function handleDrop(e) {
     const section = dragCard.closest('.qr-category-section');
     dragCard.classList.remove('qr-dragging');
     dragCard = null;
+    disarmDrag();
     if (!section) return;
 
     const cards = [...section.querySelectorAll('.qr-card-admin')];
@@ -300,6 +325,7 @@ async function handleDrop(e) {
 function handleDragEnd() {
     if (dragCard) dragCard.classList.remove('qr-dragging');
     dragCard = null;
+    disarmDrag();
 }
 
 async function handleAdd(e) {
@@ -367,10 +393,13 @@ async function initializePage() {
     addForm.addEventListener('submit', handleAdd);
     container.addEventListener('click', handleContainerClick);
     container.addEventListener('input', handleContainerInput);
+    container.addEventListener('mousedown', handleHandleMouseDown);
     container.addEventListener('dragstart', handleDragStart);
     container.addEventListener('dragover', handleDragOver);
     container.addEventListener('drop', handleDrop);
     container.addEventListener('dragend', handleDragEnd);
+    // Sürükleme başlamadan tutamaç bırakılırsa kartı tekrar draggable olmaktan çıkar.
+    document.addEventListener('mouseup', disarmDrag);
 
     if (newImageInput && newImagePreview) {
         newImageInput.addEventListener('input', () => {
