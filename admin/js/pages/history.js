@@ -3,6 +3,7 @@ import { getLogs } from '../services/logService.js';
 import { getProducts } from '../services/productService.js';
 import { getExtraMoneyValue } from '../utils/logMapper.js';
 import { showToast } from '../ui/feedback.js';
+import { showSkeleton } from '../ui/loader.js';
 import {
     formatCurrency,
     buildHistoryRows,
@@ -444,6 +445,7 @@ function applySearchAndRender() {
 }
 
 async function loadHistoryData() {
+    showSkeleton(dom.historyContainer, 'table', 8);
     state.logs = await getLogs();
     state.products = await getProducts();
     populateMonthDropdown();

@@ -10,6 +10,7 @@ import {
     getRevenueKey,
 } from '../utils/logMapper.js';
 import { showToast, setButtonLoading } from '../ui/feedback.js';
+import { showSkeleton } from '../ui/loader.js';
 
 const datePicker = document.getElementById('date-picker');
 const salesDataContainer = document.getElementById('sales-data-container');
@@ -375,6 +376,8 @@ async function loadSalesData() {
         showToast('Gecerli bir tarih secin.', 'error');
         return;
     }
+
+    showSkeleton(salesDataContainer, 'columns', 4);
 
     const logData = await getLog(dateContext.dateKey);
     const products = await getProducts();

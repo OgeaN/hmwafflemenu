@@ -1,4 +1,5 @@
 import { auth } from '../firebase.js';
+import { bindRouteProgressToLinks, startRouteProgress } from './loader.js';
 
 const sidebarContainer = document.getElementById('sidebar-container');
 
@@ -37,6 +38,8 @@ const sidebarContent = `
 
 if (sidebarContainer) {
     sidebarContainer.innerHTML = sidebarContent;
+    // Sayfa geçişlerinde üst ilerleme çizgisini göster
+    bindRouteProgressToLinks(sidebarContainer);
 }
 
 // Add active class to current page
@@ -53,6 +56,7 @@ if (sidebarContainer) {
 const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
+        startRouteProgress();
         auth.signOut().then(() => {
             window.location.href = 'index.html';
         });

@@ -1558,3 +1558,125 @@ tbody tr:hover {
     }
 }
 
+/* ===== Yükleme göstergeleri ===== */
+
+/* Sayfa geçişi üst ilerleme çizgisi */
+.route-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 9999;
+    background: transparent;
+    opacity: 0;
+    pointer-events: none;
+}
+.route-progress.is-active {
+    opacity: 1;
+}
+.route-progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--accent), #eab308);
+    box-shadow: 0 0 8px var(--accent);
+    transform-origin: left;
+}
+.route-progress.is-active .route-progress-fill {
+    animation: route-progress-grow 2.2s cubic-bezier(0.1, 0.6, 0.2, 1) forwards;
+}
+.route-progress.is-done .route-progress-fill {
+    width: 100%;
+    animation: none;
+    transition: width 0.2s ease;
+}
+@keyframes route-progress-grow {
+    0%   { width: 0; }
+    50%  { width: 65%; }
+    85%  { width: 88%; }
+    100% { width: 95%; }
+}
+
+/* Skeleton ortak */
+.skeleton-box {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface-soft);
+    border-radius: var(--radius-sm);
+}
+.skeleton-box::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+    animation: skeleton-shimmer 1.3s infinite;
+}
+@keyframes skeleton-shimmer {
+    100% { transform: translateX(100%); }
+}
+
+.sk-line { height: 12px; }
+.sk-line-lg { width: 70%; }
+.sk-line-sm { width: 45%; height: 10px; }
+.sk-row { height: 44px; }
+.sk-row-sm { height: 30px; }
+
+/* Skeleton: kartlar (QR menü, firmalar) */
+.skeleton-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+}
+.skeleton-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+}
+.sk-thumb {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+}
+.skeleton-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Skeleton: tablo/satır listesi */
+.skeleton-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Skeleton: dashboard kanal sütunları */
+.skeleton-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+.skeleton-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+}
+
+/* Tablo içi basit yükleme satırı */
+.table-loading {
+    text-align: center;
+    color: var(--muted);
+    padding: 16px;
+}
+

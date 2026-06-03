@@ -1,10 +1,12 @@
 import { checkAuth } from '../auth.js';
 import { getFirms, updateFirm } from '../services/firmService.js';
 import { showToast, setButtonLoading } from '../ui/feedback.js';
+import { showSkeleton } from '../ui/loader.js';
 
 const firmsContainer = document.getElementById('firms-container');
 
 async function renderFirms() {
+    showSkeleton(firmsContainer, 'cards', 3);
     const firms = await getFirms();
     firmsContainer.innerHTML = '';
 

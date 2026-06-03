@@ -3,6 +3,7 @@ import { getProducts, updateProduct, addProduct } from '../services/productServi
 import { getFirms, updateFirm } from '../services/firmService.js';
 import { renderTable } from '../ui/tableRenderer.js';
 import { showToast, setButtonLoading } from '../ui/feedback.js';
+import { showSkeleton } from '../ui/loader.js';
 
 const tableContainer = document.getElementById('products-table-container');
 const addProductForm = document.getElementById('add-product-form');
@@ -31,6 +32,7 @@ async function saveProductHandler(productKey, product, row) {
 }
 
 async function renderFirms() {
+    firmsTbody.innerHTML = '<tr><td colspan="3" class="table-loading">Yükleniyor...</td></tr>';
     const firms = await getFirms();
     firmsTbody.innerHTML = '';
 
@@ -69,6 +71,7 @@ async function renderFirms() {
 }
 
 async function renderProducts() {
+    showSkeleton(tableContainer, 'table', 8);
     const products = await getProducts();
 
     const columns = [

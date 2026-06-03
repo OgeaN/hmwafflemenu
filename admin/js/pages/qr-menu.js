@@ -9,6 +9,7 @@ import {
 } from '../services/qrMenuService.js';
 import { seedMenu } from '../data/seedMenu.js';
 import { showToast, setButtonLoading } from '../ui/feedback.js';
+import { showSkeleton } from '../ui/loader.js';
 
 const container = document.getElementById('qr-menu-container');
 const addForm = document.getElementById('add-qr-form');
@@ -347,6 +348,8 @@ async function handleAdd(e) {
 
 async function initializePage() {
     await checkAuth();
+
+    showSkeleton(container, 'cards', 6);
 
     try {
         const seeded = await seedQrMenuIfEmpty(seedMenu);
